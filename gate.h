@@ -26,13 +26,8 @@ int request_send_state_event(char*, char*, char*);
 
 int zone_events_init();
 
-int gate_list_init();
-void gate_list_free();
-
 int zdoor_gate_init();
 
-boolean_t gate_exists(const char*);
 int gate_attach(const char*);
-int gate_destroy(const char*);
 
 #endif//_GATE_H

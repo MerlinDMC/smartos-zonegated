@@ -53,10 +53,8 @@ again:
     fprintf(stderr, "found zone: %02d - %s\n", zids[i], name);
 #endif//DEBUG
 
-    if (gate_exists(name) == 0) {
-      // attach the gate and ignore failures for now
-      gate_attach(name);
-    }
+    // attach the gate and ignore failures for now
+    gate_attach(name);
   }
 
   free(zids);

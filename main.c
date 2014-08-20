@@ -16,8 +16,6 @@ main(int argc, char **argv)
 
   remote_url = argv[1];
 
-  gate_list_init();
-
   // init gates for all running zones
   zdoor_gate_init();
 
@@ -25,8 +23,6 @@ main(int argc, char **argv)
   zone_events_init();
 
   pause();
-
-  gate_list_free();
 
   return (ZGATE_SUCCESS);
 }

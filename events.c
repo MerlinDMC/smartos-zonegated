@@ -47,12 +47,6 @@ sysev_evc_handler(sysevent_t *ev, void *cookie)
     curr = next;
   }
 
-  // if it is a shutdown from running we need to disable the gate
-  if (strcmp(oldstate, ZONE_EVENT_RUNNING) == 0 &&
-      strcmp(newstate, ZONE_EVENT_SHUTTING_DOWN) == 0) {
-    gate_destroy(zonename);
-  }
-
   // if it is a boot into running we need to enable the gate
   if (strcmp(oldstate, ZONE_EVENT_READY) == 0 &&
       strcmp(newstate, ZONE_EVENT_RUNNING) == 0) {
