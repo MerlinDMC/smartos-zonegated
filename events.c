@@ -5,6 +5,7 @@
 
 #include <sys/zone.h>
 #include <libsysevent.h>
+#include <libzonecfg.h>
 #include <strings.h>
 #include <unistd.h>
 
@@ -55,7 +56,14 @@ sysev_evc_handler(sysevent_t *ev, void *cookie)
 
   // ignore multiple shutting_down -> shutting_down transitions
   if (strcmp(oldstate, newstate) != 0) {
-    request_send_state_event(zonename, oldstate, newstate);
+    char zonebrand[MAXNAMELEN];
+
+    // get brand for zone
+    if (zone_get_brand(zonename, zonebrand, sizeof (zonebrand)) == Z_OK) {
+      request_send_state_event(zonename, zonebrand, oldstate, newstate);
+    } else {
+      request_send_state_event(zonename, NULL, oldstate, newstate);
+    }
   }
 
   return (0);

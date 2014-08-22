@@ -3,13 +3,13 @@
  * See LICENSE file for copyright and license details.
  */
 
-#include <time.h>
 #include <curl/curl.h>
+#include <time.h>
 
 #include "gate.h"
 
 #define LOGIN_EVENT_FMT "{\"zonename\":\"%s\",\"when\":%llu,\"event\":\"login\",\"username\":\"%s\",\"uid\":%u,\"fingerprint\":\"%s\"}"
-#define STATE_EVENT_FMT "{\"zonename\":\"%s\",\"when\":%llu,\"event\":\"state\",\"oldstate\":\"%s\",\"newstate\":\"%s\"}"
+#define STATE_EVENT_FMT "{\"zonename\":\"%s\",\"when\":%llu,\"event\":\"state\",\"brand\":\"%s\",\"oldstate\":\"%s\",\"newstate\":\"%s\"}"
 
 uint64_t
 _microtime()
@@ -103,16 +103,17 @@ request_send_login_event(char *zonename, char *data)
 }
 
 int
-request_send_state_event(char *zonename, char *oldstate, char *newstate)
+request_send_state_event(char *zonename, char *zonebrand, char *oldstate, char *newstate)
 {
 #ifdef  DEBUG
-  fprintf(stdout, "state changed: zone=%s, old=%s, new=%s\n", zonename, oldstate, newstate);
+  fprintf(stdout, "state changed: zone=%s, brand=%s, old=%s, new=%s\n", zonename, zonebrand, oldstate, newstate);
 #endif//DEBUG
 
   char *buf;
   int res;
 
-  asprintf(&buf, STATE_EVENT_FMT, zonename, _microtime(), oldstate, newstate);
+  asprintf(&buf, STATE_EVENT_FMT, zonename, _microtime(), zonebrand,
+           oldstate, newstate);
 
   res = _request_post_data(buf);
 

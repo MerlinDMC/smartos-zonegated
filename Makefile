@@ -14,7 +14,7 @@ PROGS = zonegated
 SLIBS = $(PWD)/curl-$(CURL_VERSION)/lib/.libs/libcurl.a
 
 CFLAGS = -I$(PWD) -I$(PWD)/curl-$(CURL_VERSION)/include -Wall -Wextra -Werror -g -O2 -DCURL_STATICLIB
-LDFLAGS = -lnvpair -lzdoor -lsocket -lnsl -lsysevent
+LDFLAGS = -lnvpair -lzdoor -lsocket -lnsl -lsysevent -lzonecfg
 
 %.o:	%.c
 	$(CC) -c $(CFLAGS) -o $@ $<

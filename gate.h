@@ -22,7 +22,7 @@ typedef enum zgate_exit_codes {
 char *remote_url;
 
 int request_send_login_event(char*, char*);
-int request_send_state_event(char*, char*, char*);
+int request_send_state_event(char*, char*, char*, char*);
 
 int zone_events_init();
 
